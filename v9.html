@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070708" />
+  <meta name="description" content="Lore d'Eris Akeria — Primera de la section scientifique, péché mineur de l'Insatiabilité." />
+  <title>Eris Akeria — L'Insatiable</title>
+  <style>
+    :root{
+      --bg:#070708;--panel:#0d0d0f;--panel2:#121215;--ink:#ece7df;--muted:#a49b94;
+      --line:rgba(255,255,255,.105);--red:#991428;--red2:#d02a43;--gold:#bf9456;--max:1220px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.095;background-image:radial-gradient(rgba(255,255,255,.18) .55px,transparent .6px);background-size:5px 5px;mix-blend-mode:soft-light}
+    a{color:inherit;text-decoration:none}.red{color:var(--red2)}
+    .progress{position:fixed;left:0;top:0;height:2px;background:linear-gradient(90deg,var(--red),var(--red2));width:0;z-index:1200}
+
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;display:flex;align-items:center;background:linear-gradient(to bottom,rgba(7,7,8,.98),rgba(7,7,8,.79));backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    .topbar-inner{width:min(var(--max),calc(100% - 36px));margin:auto;display:flex;align-items:center;gap:25px}
+    .brand{font:15px Arial,Helvetica,sans-serif;letter-spacing:.29em;white-space:nowrap}.brand b{color:var(--red2);font-weight:400}
+    .chapter-nav{display:flex;gap:17px;overflow:auto;scrollbar-width:none;flex:1;padding:4px 0}.chapter-nav::-webkit-scrollbar{display:none}
+    .chapter-nav a{font:9px/1.2 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#89827d;white-space:nowrap;transition:.2s}.chapter-nav a:hover,.chapter-nav a.active{color:#fff}
+    .counter{font:9px Arial,sans-serif;color:#827a74;letter-spacing:.13em;white-space:nowrap}
+
+    .hero{min-height:100svh;position:relative;overflow:hidden;border-bottom:1px solid var(--line);display:flex;align-items:center}
+    .hero-atmosphere{position:absolute;inset:-35px;background:url('assets/hero.png') center 30%/cover no-repeat;filter:blur(16px) saturate(.65) brightness(.26);transform:scale(1.09);opacity:.9}
+    .hero-shade{position:absolute;inset:0;background:radial-gradient(circle at 72% 42%,rgba(154,19,41,.18),transparent 30%),linear-gradient(90deg,#070708 0%,rgba(7,7,8,.88) 43%,rgba(7,7,8,.42) 72%,#070708 100%),linear-gradient(0deg,#070708 0%,transparent 35%,rgba(7,7,8,.2) 100%)}
+    .hero-inner{position:relative;z-index:2;width:min(var(--max),calc(100% - 40px));margin:auto;padding:120px 0 72px;display:grid;grid-template-columns:1.05fr .78fr;gap:70px;align-items:center}
+    .eyebrow{font:10px Arial,sans-serif;letter-spacing:.34em;text-transform:uppercase;color:#b0a7a0;margin-bottom:20px}
+    h1{font-weight:400;font-size:clamp(67px,9vw,138px);line-height:.8;margin:0;letter-spacing:.018em}.akeria{display:block;font-size:.31em;letter-spacing:.35em;margin-top:28px;color:#c7bdb5}
+    .hero-copy{max-width:640px;margin-top:36px;font-size:clamp(17px,1.65vw,23px);line-height:1.68;color:#d8d0ca;text-shadow:0 2px 18px #000}.hero-copy strong{font-weight:400;color:#fff}
+    .hero-meta{width:min(560px,100%);margin-top:38px;border-top:1px solid var(--line)}
+    .meta-row{display:grid;grid-template-columns:125px 1fr;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font:10px/1.5 Arial,sans-serif}.meta-row span:first-child{color:#766f69;text-transform:uppercase;letter-spacing:.16em}.meta-row span:last-child{color:#e2dbd5;letter-spacing:.055em}
+    .hero-art{position:relative;width:min(520px,100%);aspect-ratio:3/4;justify-self:end;background:#070708;border:1px solid rgba(255,255,255,.11);box-shadow:0 35px 100px rgba(0,0,0,.65);overflow:hidden}
+    .hero-art:before{content:"";position:absolute;inset:14px;border:1px solid rgba(208,42,67,.27);z-index:2;pointer-events:none}.hero-art:after{content:"";position:absolute;inset:0;box-shadow:inset 0 -100px 100px rgba(7,7,8,.42),inset 0 0 50px rgba(0,0,0,.25);z-index:1;pointer-events:none}
+    .hero-art img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+    .scroll-cue{position:absolute;right:28px;bottom:22px;z-index:5;font:9px Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#777;writing-mode:vertical-rl}
+
+    .section{position:relative;min-height:100vh;display:flex;align-items:center;border-bottom:1px solid var(--line);overflow:hidden}
+    .section .inner{width:min(var(--max),calc(100% - 40px));margin:auto;padding:112px 0;position:relative;z-index:2}
+    .section-num{font:10px Arial,sans-serif;letter-spacing:.25em;color:#756e68;text-transform:uppercase;margin-bottom:22px}.section-num b{color:var(--red2);font-weight:400}
+    h2{font-size:clamp(43px,5.7vw,88px);line-height:.96;margin:0 0 28px;font-weight:400;letter-spacing:-.02em}
+    .lead{font-size:clamp(18px,2vw,28px);line-height:1.55;max-width:780px;color:#d5cec8}
+    .copy{max-width:780px;font-size:18px;line-height:1.9;color:#aaa39d}.copy p{margin:0 0 1.22em}.copy em{color:#ddd3ca}.copy strong{font-weight:400;color:#fff}
+    .quote{margin:42px 0 0;padding:25px 30px;border-left:2px solid var(--red2);font-size:clamp(22px,3vw,40px);font-style:italic;line-height:1.38;max-width:880px;background:linear-gradient(90deg,rgba(153,20,40,.13),transparent)}
+    .tagline{font:10px Arial,sans-serif;letter-spacing:.21em;text-transform:uppercase;color:#817a74;margin-top:24px}
+    .dark-red{background:radial-gradient(circle at 75% 30%,rgba(119,10,25,.18),transparent 41%),#080809}.glyph{position:absolute;font-size:min(35vw,500px);color:rgba(255,255,255,.018);right:-3vw;top:50%;transform:translateY(-50%);user-select:none}
+    .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(390px,.92fr);gap:72px;align-items:center}
+    .split.reverse{grid-template-columns:minmax(390px,.92fr) minmax(0,1fr)}
+    .visual-card{position:relative;width:100%;aspect-ratio:3/4;border:1px solid var(--line);background:#09090a;overflow:hidden;box-shadow:0 30px 85px rgba(0,0,0,.5)}
+    .visual-card:before{content:"";position:absolute;inset:16px;border:1px solid rgba(208,42,67,.2);z-index:2;pointer-events:none}
+    .visual-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,7,8,.4),transparent 26%),linear-gradient(90deg,rgba(7,7,8,.12),transparent);pointer-events:none}
+    .visual-card img{width:100%;height:100%;display:block;object-fit:cover;object-position:center center;filter:saturate(.98) contrast(1.02);transform:scale(1.001)}
+    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:45px}.timeline>div{background:#0c0c0e;padding:22px}.timeline b{display:block;font:10px Arial,sans-serif;color:var(--red2);letter-spacing:.15em;margin-bottom:9px}.timeline span{font-size:14px;color:#b8b0a9;line-height:1.5}
+    .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:30px;max-width:820px}.facts div{border:1px solid var(--line);background:#0d0d0f;padding:18px 20px;font:12px/1.55 Arial,sans-serif;color:#a9a29c;letter-spacing:.04em}.facts b{display:block;color:#fff;font-weight:400;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;font-size:10px}
+    .research-note{margin-top:30px;padding:22px 24px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(153,20,40,.08),rgba(255,255,255,.018));font-size:15px;line-height:1.75;color:#aaa39d}.research-note b{display:block;font:10px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#d8d0ca;margin-bottom:8px}
+
+    .finale{min-height:112vh;position:relative;display:flex;align-items:center;text-align:center;overflow:hidden;background:#070708}
+    .finale-bg{position:absolute;inset:-35px;background:url('assets/mark-i.png') center 32%/cover no-repeat;filter:blur(3px) brightness(.38) saturate(.72);transform:scale(1.05)}
+    .finale:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#070708 0%,rgba(7,7,8,.64) 35%,rgba(7,7,8,.42) 62%,#070708 100%),radial-gradient(circle at 50% 48%,transparent,rgba(7,7,8,.46) 66%)}
+    .finale .inner{position:relative;z-index:2;width:min(930px,calc(100% - 40px));margin:auto;padding:105px 0}.finale h2{font-size:clamp(58px,8vw,118px);margin:24px 0}.finale p{font-size:clamp(18px,2.1vw,27px);line-height:1.72;color:#d5cdc6}.mantra{font-size:clamp(24px,3.8vw,53px);line-height:1.48;font-style:italic;margin-top:42px}.mantra span{display:block}.always{font-size:clamp(72px,13vw,180px);line-height:.82;text-transform:uppercase;letter-spacing:-.045em;color:var(--red2);margin-top:54px;text-shadow:0 0 45px rgba(208,42,67,.16)}
+    footer{padding:46px 20px;text-align:center;border-top:1px solid var(--line);font:9px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#655f5a;background:#050506}
+
+    @media(max-width:920px){
+      .topbar{height:58px}.topbar-inner{width:calc(100% - 24px);gap:13px}.brand{font-size:12px}.counter{display:none}
+      .hero-inner{grid-template-columns:1fr;padding-top:105px;gap:45px}.hero-art{justify-self:center;width:min(560px,92vw)}.hero-atmosphere{opacity:.55}
+      .split,.split.reverse{grid-template-columns:1fr;gap:44px}.split.reverse .visual-card{order:2}.timeline{grid-template-columns:1fr 1fr}.visual-card{width:min(610px,100%);margin-inline:auto}.section .inner{padding:94px 0}
+    }
+    @media(max-width:560px){
+      .chapter-nav{display:none}h1{font-size:70px}.timeline,.facts{grid-template-columns:1fr}.section .inner{padding:82px 0}.meta-row{grid-template-columns:98px 1fr}.hero-copy{font-size:17px}.hero-art{width:100%}.scroll-cue{display:none}.always{font-size:22vw}
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">ER<b>I</b>S AKERIA</a>
+      <nav class="chapter-nav" id="nav">
+        <a href="#origines">Origines</a><a href="#hollow">Hollow</a><a href="#evolution">Évolution</a><a href="#science">Science</a><a href="#recherche">Recherche</a><a href="#hierarchie">Primera</a><a href="#preceptes">Préceptes</a><a href="#marque">Le I</a><a href="#insatiabilite">Insatiabilité</a><a href="#voix">La voix</a><a href="#objectif">Aujourd'hui</a>
+      </nav>
+      <div class="counter" id="counter">01 / 11</div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-atmosphere"></div><div class="hero-shade"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Arrancar • Section scientifique • Primera</div>
+          <h1>ER<span class="red">I</span>S<span class="akeria">AKERIA</span></h1>
+          <p class="hero-copy">Elle ne cherche pas seulement à devenir plus forte. Elle veut <strong>comprendre</strong> : les Hollows, leurs émotions, les mécanismes de l'âme et ce qui subsiste de son propre passé. Depuis que l'Insatiabilité s'est éveillée en elle, chaque réponse ouvre une question supplémentaire.</p>
+          <div class="hero-meta">
+            <div class="meta-row"><span>Nature</span><span>Arrancar</span></div>
+            <div class="meta-row"><span>Branche</span><span>Section scientifique</span></div>
+            <div class="meta-row"><span>Grade</span><span class="red">Primera</span></div>
+            <div class="meta-row"><span>Précepte</span><span>Péché mineur de l'Insatiabilité</span></div>
+            <div class="meta-row"><span>Supérieur</span><span>Julius Lowneur — L'Ogre de la Gourmandise</span></div>
+            <div class="meta-row"><span>Marque</span><span>I — dans le dos</span></div>
+          </div>
+        </div>
+        <figure class="hero-art"><img src="assets/hero.png" alt="Eris Akeria" decoding="async" fetchpriority="high"></figure>
+      </div>
+      <div class="scroll-cue">Descendre</div>
+    </section>
+
+    <section class="section" id="origines" data-title="Origines">
+      <div class="glyph">記</div>
+      <div class="inner">
+        <div class="section-num"><b>01</b> / Origines</div>
+        <h2>Une émotion.<br>Rien d'autre.</h2>
+        <p class="lead">De sa vie humaine, Eris ne possède aucune image. Aucun visage, aucun lieu, aucun objet, aucun repère visuel.</p>
+        <div class="copy">
+          <p>Il ne lui reste qu'une <strong>émotion</strong>. Une sensation ancienne, isolée de tout contexte, dont elle ne connaît ni la cause ni l'origine.</p>
+          <p>Elle ne peut pas reconstruire une scène autour d'elle. Cette émotion est simplement là, comme la seule preuve qu'il existait quelque chose avant le Hollow.</p>
+        </div>
+        <div class="quote">« Une émotion. Aucune image pour lui donner un sens. »</div>
+      </div>
+    </section>
+
+    <section class="section dark-red" id="hollow" data-title="Hollow">
+      <div class="inner split">
+        <div>
+          <div class="section-num"><b>02</b> / Hueco Mundo</div>
+          <h2>Dévorer pour<br>continuer d'exister.</h2>
+          <div class="copy">
+            <p>Eris apparut d'abord comme un Hollow dominé par l'instinct. Dans le Hueco Mundo, survivre signifiait chasser, absorber et évoluer.</p>
+            <p>Mais la faim n'effaça pas tout. À mesure qu'elle avançait, elle observa davantage. Elle retint des comportements. Elle commença à distinguer ce qui relevait de l'instinct de ce qui ressemblait déjà à un choix.</p>
+          </div>
+          <div class="tagline">Faim • Adaptation • Observation</div>
+        </div>
+        <figure class="visual-card"><img src="assets/hollow.png" loading="lazy" decoding="async" alt="Eris dans le Hueco Mundo"></figure>
+      </div>
+    </section>
+
+    <section class="section" id="evolution" data-title="Évolution">
+      <div class="inner split reverse">
+        <figure class="visual-card"><img src="assets/evolution.png" loading="lazy" decoding="async" alt="Évolution d'Eris"></figure>
+        <div>
+          <div class="section-num"><b>03</b> / Évolution</div>
+          <h2>Quand l'instinct<br>devint pensée.</h2>
+          <p class="lead">Chaque étape lui donna davantage de puissance, mais surtout davantage de conscience de ce qu'elle ignorait.</p>
+          <div class="copy">
+            <p>Hollow, puis Gillian, Adjuchas et Vasto Lorde : plusieurs âmes et instincts pouvaient se mêler au cours de l'évolution. Eris, elle, commença progressivement à analyser ce qui l'entourait au lieu de seulement y réagir.</p>
+            <p>À un stade avancé, elle apprit à parler. Les sons devinrent des mots ; les mots, des questions. Une fois devenue Arrancar, elle possédait enfin les outils nécessaires pour transformer sa curiosité en recherche.</p>
+          </div>
+          <div class="timeline">
+            <div><b>HOLLOW</b><span>Instinct et faim.</span></div><div><b>GILLIAN</b><span>Les âmes s'accumulent.</span></div><div><b>ADJUCHAS</b><span>La pensée se structure.</span></div><div><b>VASTO LORDE</b><span>La conscience s'affirme.</span></div><div><b>ARRANCAR</b><span>Eris Akeria.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-red" id="science" data-title="Science">
+      <div class="inner split">
+        <div>
+          <div class="section-num"><b>04</b> / Las Noches</div>
+          <h2>La science<br>comme langage.</h2>
+          <div class="copy">
+            <p>À Las Noches, Eris trouva une discipline capable de donner une forme à son besoin de comprendre : <strong>la section scientifique</strong>.</p>
+            <p>Elle observe, compare, expérimente et cherche des mécanismes reproductibles. Les Hollows ne sont pas pour elle de simples sujets à mesurer par leur force : leurs réactions, leurs émotions et leur capacité à apprendre sont tout aussi importantes.</p>
+            <p>Son calme lui permet de rester assez longtemps devant un phénomène pour remarquer ce que d'autres auraient ignoré.</p>
+          </div>
+          <div class="quote">« Comprendre. Observer. Expérimenter. Toujours plus. »</div>
+        </div>
+        <figure class="visual-card"><img src="assets/science.png" loading="lazy" decoding="async" alt="Eris au sein de la section scientifique"></figure>
+      </div>
+    </section>
+
+    <section class="section" id="recherche" data-title="Recherche">
+      <div class="inner split reverse">
+        <figure class="visual-card"><img src="assets/research.png" loading="lazy" decoding="async" alt="Eris étudiant l'intelligence des Hollows"></figure>
+        <div>
+          <div class="section-num"><b>05</b> / Projet scientifique</div>
+          <h2>Un Hollow silencieux<br>est-il vraiment vide ?</h2>
+          <p class="lead">Eris veut prouver que n'importe quel Hollow peut être plus intelligent que ce que laisse croire son instinct primitif.</p>
+          <div class="copy">
+            <p>Elle étudie autant ceux qui parlent que ceux qui en sont incapables. Le langage n'est qu'un moyen d'expression : l'absence de parole ne suffit pas à prouver l'absence de pensée, d'émotion ou de décision.</p>
+            <p>Elle observe les réactions à la peur, à la colère, à la douleur, à l'attachement et aux changements d'environnement. Une bague de communication utilisée par la scientifique pourrait également permettre de tester ce qu'un Hollow comprend lorsqu'un moyen de communiquer lui est offert.</p>
+          </div>
+          <div class="research-note"><b>Une piste étudiée</b>Une théorie évoquée au sein de la scientifique suppose qu'un Hollow très récent pourrait conserver davantage de traces de sa vie antérieure si son masque était arraché avant que les absorptions successives ne mêlent davantage d'âmes et de souvenirs. Eris considère cette idée comme une piste à vérifier, pas comme une conclusion acquise.</div>
+          <div class="tagline">Cognition Hollow • Émotions • Communication non verbale • Mémoire</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-red" id="hierarchie" data-title="Primera">
+      <div class="inner split">
+        <div>
+          <div class="section-num"><b>06</b> / Hiérarchie scientifique</div>
+          <h2>Primera.</h2>
+          <p class="lead">Eris a atteint le rang de Primera. Une reconnaissance importante qui, pour elle, n'a rien d'une conclusion.</p>
+          <div class="copy">
+            <p>Après Tercera puis Segunda, sa promotion au rang de Primera lui donne davantage de responsabilités, d'accès et de possibilités d'expérimentation.</p>
+            <p>Chaque échelon conquis élargit surtout le champ de ce qu'elle sait ne pas encore connaître. Un sommet devient simplement un meilleur point de vue sur la prochaine limite.</p>
+          </div>
+          <div class="timeline" style="grid-template-columns:repeat(4,1fr)">
+            <div><b>ENTRÉE</b><span>Section scientifique.</span></div><div><b>TERCERA</b><span>Première progression.</span></div><div><b>SEGUNDA</b><span>Un rang supérieur.</span></div><div><b>PRIMERA</b><span>Encore plus loin.</span></div>
+          </div>
+        </div>
+        <figure class="visual-card"><img src="assets/primera.png" loading="lazy" decoding="async" alt="Eris au rang de Primera"></figure>
+      </div>
+    </section>
+
+    <section class="section" id="preceptes" data-title="Préceptes">
+      <div class="glyph">飽</div>
+      <div class="inner">
+        <div class="section-num"><b>07</b> / Ordre des Préceptes</div>
+        <h2>Sous la<br>Gourmandise.</h2>
+        <p class="lead">Eris occupe la place de péché mineur de l'Insatiabilité sous les ordres de Julius Lowneur — L'Ogre de la Gourmandise.</p>
+        <div class="copy">
+          <p>Chez elle, le péché ne prend pas la forme d'une faim de nourriture. Il s'accroche à quelque chose qui existait déjà : son besoin d'apprendre, de comprendre, d'expérimenter et de progresser.</p>
+          <p>Ce désir ne se contente pas d'un résultat. Une réponse trouvée peut la satisfaire un instant, puis le manque revient sous une autre forme.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-red" id="marque" data-title="Le I">
+      <div class="glyph">I</div>
+      <div class="inner split reverse">
+        <figure class="visual-card"><img src="assets/mark-i.png" loading="lazy" decoding="async" alt="Le I de l'Insatiabilité dans le dos d'Eris"></figure>
+        <div>
+          <div class="section-num"><b>08</b> / La marque</div>
+          <h2>Le I<br>dans son dos.</h2>
+          <p class="lead">La marque de l'Insatiabilité inscrit physiquement ce besoin qui ne possède aucun point de saturation.</p>
+          <div class="copy">
+            <p>Depuis son apparition, le manque se fait plus présent. Une réponse obtenue appelle immédiatement la suivante. Une limite comprise devient une limite à dépasser.</p>
+            <p>Son effet secondaire physique connu reste distinct du reste : <strong>des migraines récurrentes</strong>, qui peuvent devenir plus fortes lorsque l'Insatiabilité est fortement sollicitée.</p>
+          </div>
+          <div class="facts"><div><b>Marque</b>I — visible dans le dos.</div><div><b>Effet connu</b>Migraines récurrentes.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="insatiabilite" data-title="Insatiabilité">
+      <div class="inner">
+        <div class="section-num"><b>09</b> / Naissance</div>
+        <h2>Eris<br>l'Insatiable.</h2>
+        <p class="lead">La curiosité ne suffit plus à décrire ce qui la pousse. Son besoin ne connaît plus de véritable point final.</p>
+        <div class="copy">
+          <p>La connaissance appelle davantage de connaissance. La puissance appelle davantage de puissance. Même un objectif atteint devient rapidement le début d'un autre.</p>
+          <p>Le vide ne disparaît pas. Il change simplement de forme. C'est ainsi qu'Eris l'Insatiable prend réellement sens : elle peut être satisfaite un instant, jamais rassasiée.</p>
+        </div>
+        <div class="quote">« Il manque encore quelque chose… »</div>
+      </div>
+    </section>
+
+    <section class="section dark-red" id="voix" data-title="La voix">
+      <div class="inner">
+        <div class="section-num"><b>10</b> / Instabilité intérieure</div>
+        <h2>Une voix<br>qui réclame plus.</h2>
+        <p class="lead">À mesure que l'Insatiabilité gagne en présence, une seconde voix apparaît dans l'esprit d'Eris.</p>
+        <div class="copy">
+          <p>Elle contraste avec son tempérament calme : plus aiguë, rieuse et agressive, elle s'attaque directement à ses faiblesses et transforme chaque insuffisance en provocation.</p>
+          <p><em>« Tu es faible. Tu n'es rien. »</em> Elle pousse Eris à continuer, à apprendre davantage et à ne jamais considérer une victoire comme suffisante.</p>
+        </div>
+        <div class="quote">« Toujours pas assez. Il en faut plus. »</div>
+      </div>
+    </section>
+
+    <section class="section" id="objectif" data-title="Aujourd'hui">
+      <div class="inner split">
+        <div>
+          <div class="section-num"><b>11</b> / Présent</div>
+          <h2>Calme en surface.<br>Affamée derrière le regard.</h2>
+          <div class="copy">
+            <p>Aujourd'hui, Eris est <strong>Primera de la section scientifique</strong> et péché mineur de l'Insatiabilité.</p>
+            <p>Elle poursuit ses recherches sur les Hollows, leur intelligence, leurs émotions et leurs souvenirs. Elle veut comprendre son évolution, maîtriser ce que le I amplifie en elle et repousser les limites de ses connaissances.</p>
+            <p>Au centre de tout subsiste la même énigme : cette unique émotion venue d'une vie dont elle ne possède absolument aucune image.</p>
+          </div>
+          <div class="quote">« Comprendre. Toujours plus. Jamais assez. »</div>
+        </div>
+        <figure class="visual-card"><img src="assets/present.png" loading="lazy" decoding="async" alt="Eris Akeria aujourd'hui"></figure>
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="finale-bg"></div>
+      <div class="inner">
+        <div class="eyebrow">Primera • Péché mineur de l'Insatiabilité</div>
+        <h2>RIEN N'EST<br><span class="red">SUFFISANT.</span></h2>
+        <p>Une scientifique peut chercher une réponse. Eris cherche ce qui se trouve derrière la réponse.</p>
+        <div class="mantra"><span>Ce n'est jamais suffisant.</span><span>Toujours pas assez.</span><span>Il en faut plus.</span></div>
+        <div class="always">Toujours plus.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>ERIS AKERIA • ARRANCAR • SECTION SCIENTIFIQUE • PRIMERA • INSATIABILITÉ</footer>
+
+  <script>
+    const progress=document.getElementById('progress'), counter=document.getElementById('counter');
+    const sections=[...document.querySelectorAll('main > section[id]')];
+    const links=[...document.querySelectorAll('#nav a')];
+    function onScroll(){const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;progress.style.width=(max?h.scrollTop/max*100:0)+'%';}
+    window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.id;const i=sections.findIndex(s=>s.id===id);links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));counter.textContent=String(i+1).padStart(2,'0')+' / '+String(sections.length).padStart(2,'0');}})},{rootMargin:'-42% 0px -42% 0px',threshold:0});
+    sections.forEach(s=>obs.observe(s));
+  </script>
+</body>
+</html>
